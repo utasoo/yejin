@@ -12,56 +12,137 @@ main{max-width:1050px;margin:auto;padding:0 24px 60px}.intro{text-align:center;p
 .layout{display:grid;grid-template-columns:310px 1fr;gap:20px;align-items:start}.panel{background:#fffdfbdf;border:1px solid var(--line);border-radius:22px;padding:23px;box-shadow:var(--shadow)}.panel h2{font:18px 'Nanum Myeongjo',serif;margin:0 0 18px}.label{font-size:12px;color:var(--muted);display:block;margin:17px 0 9px}.select{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px;color:var(--ink);font:14px 'Gowun Dodum';outline:none}.topic{background:linear-gradient(135deg,#fbf0f2,#f7f4ee);border-radius:16px;padding:17px;margin-top:15px;min-height:138px}.topic .mini{font-size:10px;letter-spacing:2px;color:var(--rose)}.topic h3{font:20px 'Nanum Myeongjo',serif;line-height:1.55;margin:9px 0}.topic p{font-size:12px;color:var(--muted);line-height:1.6;margin:0}.btn{border:0;border-radius:12px;padding:12px 15px;font:14px 'Gowun Dodum';cursor:pointer;transition:.18s}.btn:hover{transform:translateY(-1px)}.btn-soft{background:#f5e7eb;color:#925d70}.btn-main{background:var(--rose);color:white;box-shadow:0 5px 13px #bd7e912d}.btn-full{width:100%;margin-top:12px}.tip{font-size:12px;color:var(--muted);line-height:1.7;margin-top:17px;padding-top:15px;border-top:1px dashed var(--line)}
 .write-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.write-head h2{margin:0}.counter{font-size:12px;color:var(--muted)}textarea{width:100%;resize:vertical;min-height:340px;border:1px solid var(--line);border-radius:15px;padding:20px;background:#fff;font:16px/2 'Nanum Myeongjo',serif;color:#443a40;outline:none;margin-top:17px}textarea:focus{border-color:#d5a6b5;box-shadow:0 0 0 3px #f7e9ed}textarea::placeholder{color:#c2b6bc}.actions{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:13px}.smallnote{font-size:11px;color:var(--muted);line-height:1.6}.results{display:none;margin-top:20px}.result-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.result-top h2{margin:0}.score{background:#f2e7e9;color:#98687a;border-radius:99px;padding:8px 13px;font-size:13px}.feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.feedback{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.feedback h3{font-size:13px;margin:0 0 9px}.feedback p,.feedback li{font-size:13px;line-height:1.8;color:#726770}.feedback ul{padding-left:18px;margin:0}.wide{grid-column:1/-1}.sample{background:#f7f2ee;border-radius:12px;padding:14px;font:14px/1.9 'Nanum Myeongjo',serif;color:#63535b;margin-top:8px}.footer{text-align:center;font-size:11px;color:#a49aa0;margin-top:25px}.toast{font-size:12px;color:var(--sage);min-height:18px}
 @media(max-width:760px){header{padding-top:25px}.layout{grid-template-columns:1fr}.intro{padding-top:10px}.feedback-grid{grid-template-columns:1fr}.wide{grid-column:auto}.panel{padding:19px}textarea{min-height:280px}.tag{display:none}}
+
+.mode-switch{display:flex;gap:10px;justify-content:center;margin:0 0 22px;flex-wrap:wrap}.mode-btn{border:1px solid var(--line);background:#fff;border-radius:99px;padding:11px 22px;color:var(--muted);font:14px 'Gowun Dodum';cursor:pointer}.mode-btn.active{background:var(--rose);border-color:var(--rose);color:white}.genre-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}.relay-turn{padding:14px;border:1px solid var(--line);border-radius:13px;margin-top:10px;background:#fff;white-space:pre-wrap;line-height:1.8;font-size:14px}.relay-turn small{display:block;color:var(--rose);font-size:10px;letter-spacing:1px;margin-bottom:6px}.relay-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.relay-input{width:100%;min-height:130px;border:1px solid var(--line);border-radius:13px;padding:14px;font:14px/1.8 'Nanum Myeongjo',serif;margin-top:12px}
 </style></head><body>
 <header><div class="brand">문장 온도 <small>FICTION WRITING STUDIO</small></div><div class="tag">나만의 소설 연습실</div></header>
 <main><section class="intro"><div class="eyebrow">WRITE · FEEL · GROW</div><h1>오늘의 문장을 써볼까요?</h1><p>작은 장면 하나를 쓰고, 문장 속 감정을 발견해 보세요.<br>완벽한 글보다 어제보다 조금 선명한 문장을 목표로.</p></section>
-<div class="layout"><aside class="panel"><h2>오늘의 글감</h2><label class="label" for="category">연습할 묘사</label><select class="select" id="category"><option value="random">🎲 아무거나 랜덤</option><option value="emotion">감정 묘사</option><option value="atmosphere">분위기 묘사</option><option value="sense">감각 묘사</option><option value="action">인물 행동 묘사</option><option value="dialogue">대화와 속마음</option></select><div class="topic" aria-live="polite"><div class="mini" id="topicType">TODAY'S PROMPT</div><h3 id="topicTitle">비가 그친 밤, 전하지 못한 말을 품은 채 누군가를 기다린다.</h3><p id="topicDesc">장면을 떠올리고 300자 이상 써보세요.</p></div><button class="btn btn-soft btn-full" id="newTopic">다른 주제 뽑기 ↻</button><div class="tip">✦ 연습 팁<br>감정을 이름 붙이는 대신, 인물의 몸과 행동에 감정을 묻혀 보세요. 한 문장에 모든 걸 담으려 하지 않아도 괜찮아요.</div></aside>
+
+<div class="mode-switch" role="tablist" aria-label="글쓰기 방식">
+<button class="mode-btn active" id="assignedModeBtn" type="button">지정 주제 글쓰기</button>
+<button class="mode-btn" id="freeModeBtn" type="button">자유 주제 글쓰기</button>
+<button class="mode-btn" id="relayModeBtn" type="button">AI 릴레이 소설</button>
+</div>
+<div class="layout" id="writingLayout"><aside class="panel" id="promptPanel"><h2>오늘의 글감</h2><label class="label" for="category">장르 선택</label><select class="select" id="category">
+<option value="random">전체 장르 랜덤</option><option value="fantasy">판타지</option><option value="mystery">추리 · 미스터리</option><option value="romance">로맨스</option><option value="sf">SF · 미래</option><option value="horror">공포 · 스릴러</option><option value="daily">일상 · 청춘</option><option value="adventure">모험 · 성장</option><option value="fairytale">동화 · 기묘한 이야기</option><option value="drama">휴먼 · 드라마</option></select><div class="topic" aria-live="polite"><div class="mini" id="topicType">TODAY'S PROMPT</div><h3 id="topicTitle">비가 그친 밤, 전하지 못한 말을 품은 채 누군가를 기다린다.</h3><p id="topicDesc">장면을 떠올리고 300자 이상 써보세요.</p></div><button class="btn btn-soft btn-full" id="newTopic">이 장르에서 다른 주제 뽑기 ↻</button><div class="tip">✦ 연습 팁<br>감정을 이름 붙이는 대신, 인물의 몸과 행동에 감정을 묻혀 보세요. 한 문장에 모든 걸 담으려 하지 않아도 괜찮아요.</div></aside>
 <section class="panel"><div class="write-head"><h2>나의 장면</h2><span class="counter"><b id="count">0</b>자</span></div><textarea id="writing" placeholder="예) 창문에 빗방울이 하나씩 맺혔다. 휴대전화 화면은 몇 번이나 켜졌다 꺼졌지만, 기다리던 이름은 끝내 나타나지 않았다…"></textarea><div class="actions"><span class="smallnote">글은 이 브라우저에서 분석돼요.<br>작성한 문장은 자동 저장되지 않으니 복사해 두세요.</span><button class="btn btn-main" id="review">내 글 첨삭받기 ✦</button></div><div class="toast" id="message"></div><div class="results" id="results"><div class="result-top"><h2>문장 피드백</h2><span class="score" id="score">분석 완료</span></div><div class="feedback-grid"><div class="feedback"><h3>🌷 잘한 점</h3><ul id="strengths"></ul></div><div class="feedback"><h3>🪄 더 다듬어 볼 점</h3><ul id="improve"></ul></div><div class="feedback wide"><h3>🔎 문장 코칭 — 이유와 방법</h3><div id="coaching"></div></div><div class="feedback wide"><h3>✍️ 연습 방향</h3><p id="exercise"></p></div></div></div></section></div>
 <section class="panel" id="historyPanel" style="margin-top:20px">
   <div class="write-head"><h2>나의 글 기록</h2><span class="counter" id="historyCount">0개의 기록</span></div>
   <p class="smallnote" style="margin:8px 0 14px">첨삭받은 글은 이 브라우저에 자동으로 보관돼요.</p>
   <div id="historyList" aria-live="polite"></div>
 </section>
+
+<section class="panel" id="relayPanel" style="display:none;margin-top:20px">
+<h2>AI 릴레이 소설</h2>
+<p class="smallnote">네가 한 부분을 쓰고 AI에게 다음 장면을 이어 달라고 한 뒤, 답변을 붙여 넣어 이야기를 함께 완성해 보세요.</p>
+<div id="relayStory" aria-live="polite"><p class="smallnote">아직 이야기가 없어요. 첫 문장을 써서 시작해 보세요!</p></div>
+<textarea id="relayInput" class="relay-input" placeholder="이야기의 첫 부분이나 다음 차례에 이어 쓸 내용을 입력해 주세요."></textarea>
+<div class="relay-actions">
+<button class="btn btn-main" id="relayAdd">내 차례 추가</button>
+<button class="btn btn-soft" id="relayCopy">AI에게 이어쓰기 요청 복사</button>
+<button class="btn btn-soft" id="relayPasteToggle">AI 답변 붙여넣기</button>
+<button class="btn btn-soft" id="relayReset">이야기 초기화</button>
+</div>
+<div id="relayPasteArea" style="display:none">
+<textarea id="relayAiText" class="relay-input" placeholder="ChatGPT 등에서 받은 AI의 이어쓰기 답변을 여기에 붙여 넣어 주세요."></textarea>
+<button class="btn btn-main" id="relayAiAdd" style="margin-top:10px">AI 차례 추가</button>
+</div>
+<p class="tip">※ 이 사이트는 GitHub Pages 기반이라 비밀 API 키를 안전하게 보관할 서버가 없어요. 그래서 AI에 직접 연결하는 대신, 요청문 복사 → AI 답변 붙여넣기 방식으로 안전하게 릴레이할 수 있게 만들었어요.</p>
+</section>
 <div class="footer">천천히 써도 괜찮아요. 문장은 연습하는 만큼 자기만의 온도를 갖게 되니까.</div></main>
 <script>
 const prompts = {
-  emotion: [
-    ['마음이 무너지는 순간','아무렇지 않은 척 웃던 인물이 혼자 남은 복도에서 표정을 놓치는 장면.'],
-    ['오래 기다린 답장','기다리던 연락이 도착했지만, 막상 화면을 열지 못하는 순간.'],
-    ['미안하다는 말 대신','사과하고 싶은 인물이 끝내 다른 말을 꺼내는 장면.'],
-    ['괜찮다는 거짓말','누군가 걱정할까 봐 괜찮다고 말한 뒤, 작은 행동 하나로 진심이 드러나는 장면.']
+  fantasy:[
+    ['달을 수집하는 가게','밤마다 달 조각을 병에 담아 파는 가게에 처음 방문한 손님.'],
+    ['마법이 고장 난 날','주문을 외울 때마다 엉뚱한 일이 일어나는 견습 마법사.'],
+    ['용의 우체국','사람에게 편지를 배달하는 용이 수신인의 이름을 발견하는 순간.'],
+    ['지도에 없는 숲','지도에는 없지만 매일 집 앞에 조금씩 가까워지는 숲.'],
+    ['마지막 마법 도서관','책을 펼치면 그 안의 세계로 들어갈 수 있는 도서관.'],
+    ['그림자 계약','자신의 그림자가 어느 날 말을 걸어 작은 거래를 제안한다.'],
+    ['비를 내리는 새','마을에 비를 가져오는 새가 사라진 뒤의 이야기.']
   ],
-  atmosphere: [
-    ['낯선 집의 새벽','처음 방문한 집에서 잠들지 못한 인물이 새벽의 고요를 느끼는 장면.'],
-    ['여름이 끝나는 골목','익숙한 골목이 계절의 끝에서 낯설게 보이는 순간.'],
-    ['불 꺼진 교실','방과 후 텅 빈 교실에 마지막 햇빛이 머무는 장면.']
+  mystery:[
+    ['사라진 열세 번째 종','매일 열두 번 울리던 시계탑이 어느 날 열세 번째 종을 울린다.'],
+    ['빈 교실의 발자국','아무도 없던 교실에 젖은 발자국이 창가까지 이어져 있다.'],
+    ['뒤바뀐 편지','분명 자신에게 온 편지인데 글씨체가 자신의 것과 똑같다.'],
+    ['기억하지 못하는 손님','카페 직원 모두가 한 손님을 기억하지만, 그 손님은 처음 왔다고 말한다.'],
+    ['멈춘 엘리베이터','층수 표시가 존재하지 않는 층에서 멈춘다.'],
+    ['사진 속의 빈자리','오래된 단체 사진에서 한 사람의 모습만 매일 조금씩 흐려진다.'],
+    ['범인은 아직 오지 않았다','모두가 모인 방에 사건을 예고하는 쪽지가 놓여 있다.']
   ],
-  sense: [
-    ['비 오는 버스 정류장','비를 피하는 인물이 주변의 소리와 냄새, 피부에 닿는 감각을 느끼는 장면.'],
-    ['갓 구운 빵 냄새','오래된 기억을 불러오는 냄새를 맡는 순간.'],
-    ['겨울의 손끝','추운 날 누군가의 손을 잡았을 때 느끼는 감각.']
+  romance:[
+    ['우산을 돌려주는 날','몇 달 전 빌린 우산을 돌려주려다 다시 마주친 두 사람.'],
+    ['매일 같은 자리','도서관에서 늘 같은 자리에 앉는 두 사람이 쪽지를 주고받기 시작한다.'],
+    ['고백 연습','친구에게 고백하는 연습을 도와주던 인물이 자신의 마음을 깨닫는다.'],
+    ['막차를 기다리며','막차가 오기 전까지 서로의 비밀을 하나씩 이야기한다.'],
+    ['계절이 바뀌는 편지','계절마다 한 통씩 도착하는 편지의 발신인을 찾아간다.'],
+    ['좋아하는 것의 목록','서로의 취향을 맞혀 보는 게임이 예상치 못한 고백으로 이어진다.'],
+    ['다시 만난 첫사랑','오래전 헤어진 사람이 전혀 다른 모습으로 나타난다.']
   ],
-  action: [
-    ['숨기려는 편지','인물이 들키지 않으려 편지를 감추지만 행동이 자꾸 어긋나는 장면.'],
-    ['문 앞에서 망설임','초인종을 누르려던 손이 몇 번이고 멈추는 순간.'],
-    ['잠든 사람 곁에서','상대가 깨지 않도록 조심스럽게 무언가를 챙기는 장면.']
+  sf:[
+    ['기억 백업 센터','기억을 저장할 수 있는 시대, 누군가 자신의 가장 소중한 기억을 삭제해 달라고 한다.'],
+    ['마지막 인간 관측자','인류가 떠난 지구를 관리하는 로봇이 낯선 신호를 받는다.'],
+    ['내일의 메시지','매일 자정, 하루 뒤의 자신에게서 짧은 메시지가 도착한다.'],
+    ['고장 난 시간표','열차가 도착할 때마다 승객들은 서로 다른 시간에 내린다.'],
+    ['감정을 업데이트하세요','감정을 선택해 설치하는 사회에서 감정 없는 인물이 오류를 일으킨다.'],
+    ['바다 위의 도시','하늘과 바다가 뒤집힌 행성에서 길을 잃은 탐사대.'],
+    ['대답하는 별','우주 관측소의 별 하나가 질문에 맞춰 빛을 바꾸기 시작한다.']
   ],
-  dialogue: [
-    ['말하지 못한 진심','서로 다른 마음을 품은 두 사람이 평범한 대화를 나누는 장면.'],
-    ['괜찮아, 정말?','한 인물의 괜찮다는 말에 다른 인물이 쉽게 넘어가지 않는 대화.'],
-    ['헤어지기 직전','떠나야 하는 사람이 마지막으로 평범한 질문을 건네는 장면.']
+  horror:[
+    ['빈집의 불빛','몇 년째 비어 있던 옆집 창문에 매일 밤 불이 켜진다.'],
+    ['녹음 파일의 목소리','혼자 녹음한 음성 파일에 자신이 하지 않은 대답이 들어 있다.'],
+    ['엘리베이터 거울','거울 속 모습이 아주 조금 늦게 움직이기 시작한다.'],
+    ['새벽 네 시의 방송','꺼진 라디오에서 내일 일어날 일을 알려주는 방송이 들린다.'],
+    ['문을 두드리는 소리','집 안에 혼자 있는데 방 안쪽에서 노크 소리가 난다.'],
+    ['반복되는 복도','학교 복도를 걷는데 같은 교실 앞에 계속 도착한다.'],
+    ['이름을 부르는 숲','숲속에서 들리는 목소리가 가족의 목소리와 똑같다.']
+  ],
+  daily:[
+    ['여름 방학의 마지막 날','아무 일도 없을 것 같던 하루에 작은 약속이 생긴다.'],
+    ['분실물 보관함','주인을 찾지 못한 물건 하나가 오래된 추억을 떠올리게 한다.'],
+    ['옥상에서 먹는 점심','서로 잘 모르던 두 사람이 우연히 점심을 함께 먹는다.'],
+    ['동네 문방구','문을 닫는다는 소식에 단골들이 마지막으로 모인다.'],
+    ['비밀 기지 만들기','친구들이 아무도 모르는 장소에 자신들만의 아지트를 만든다.'],
+    ['전학 온 아이','말수가 적은 전학생이 반 친구들의 작은 규칙을 하나씩 바꾼다.'],
+    ['새벽의 편의점','서로 다른 사정을 가진 사람들이 같은 시간 편의점에 모인다.']
+  ],
+  adventure:[
+    ['끝까지 이어지는 계단','구름 위로 이어지는 계단을 발견한 두 친구.'],
+    ['지도 조각 세 장','서로 다른 장소에서 발견한 지도 조각이 하나의 목적지를 가리킨다.'],
+    ['이름 없는 탐험가','모두가 포기한 길을 혼자 걷기 시작한 인물.'],
+    ['바람을 훔친 도둑','바람이 멈춘 마을에서 범인을 찾아 나선다.'],
+    ['작은 배의 항해','작은 배 한 척으로 지도에 없는 섬을 찾아간다.'],
+    ['약속의 정상','어릴 적 약속을 지키기 위해 산을 오르는 친구들.'],
+    ['잃어버린 계절','사라진 봄을 되찾기 위해 계절의 문을 통과한다.']
+  ],
+  fairytale:[
+    ['잠자는 우체통','밤이 되면 편지를 먹고 꿈을 배달하는 우체통.'],
+    ['유리병 속의 바다','파도 소리가 들리는 작은 유리병을 주운 아이.'],
+    ['거꾸로 자라는 나무','뿌리가 하늘을 향해 자라는 나무 아래 마을이 있다.'],
+    ['구름 수선집','찢어진 구름을 꿰매는 재봉사가 어느 날 별을 발견한다.'],
+    ['말하는 찻잔','오래된 찻잔이 주인에게 단 한 번의 소원을 제안한다.'],
+    ['잠깐 빌린 꼬리','동물의 꼬리를 하루 동안 빌릴 수 있는 시장.'],
+    ['달빛 빵집','달빛이 가장 밝은 밤에만 문을 여는 빵집.']
+  ],
+  drama:[
+    ['오래된 녹음테이프','정리하던 서랍에서 오래전 누군가 남긴 목소리를 발견한다.'],
+    ['마지막 공연','해체를 앞둔 동아리가 마지막 무대를 준비한다.'],
+    ['빈 의자 하나','가족 식탁의 빈자리에 오랜만에 누군가가 앉는다.'],
+    ['이름을 부르는 연습','서로의 이름을 부르지 않던 두 사람이 처음으로 이름을 부른다.'],
+    ['돌아오는 길','떠났던 고향에 돌아온 인물이 익숙한 풍경 속 달라진 점을 발견한다.'],
+    ['작은 친절의 기록','익명의 친절을 기록하던 사람이 기록 속 주인공을 만난다.'],
+    ['말하지 않아도','오래 함께한 두 사람이 말없이 서로의 하루를 알아차린다.']
   ]
 };
-const labels = {
-  emotion:'EMOTION PRACTICE', atmosphere:'ATMOSPHERE PRACTICE',
-  sense:'SENSORY PRACTICE', action:'CHARACTER ACTION', dialogue:'DIALOGUE PRACTICE'
-};
+const labels = {fantasy:'FANTASY',mystery:'MYSTERY',romance:'ROMANCE',sf:'SCIENCE FICTION',horror:'HORROR & THRILLER',daily:'SLICE OF LIFE',adventure:'ADVENTURE',fairytale:'FAIRY TALE',drama:'HUMAN DRAMA',random:'RANDOM PROMPT'};
 const $ = id => document.getElementById(id);
 const countWords = (text, words) => words.reduce((total, word) => {
   const matches = text.match(new RegExp(word, 'g'));
   return total + (matches ? matches.length : 0);
 }, 0);
 let currentTopic = null;
+let writingMode = 'assigned';
+let relayTurns = [];
 
 function pickTopic() {
   let category = $('category').value;
@@ -251,7 +332,7 @@ function analyzeWriting() {
   const record = {
     id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(now.getTime()) + Math.random().toString(16).slice(2),
     dateLabel: now.toLocaleString('ko-KR'),
-    topic: currentTopic ? currentTopic.title : '자유 글쓰기',
+    topic: writingMode === 'free' ? '자유 글쓰기' : (currentTopic ? currentTopic.title : '자유 글쓰기'),
     text,
     score: Math.round(score),
     strengths,
@@ -271,6 +352,43 @@ $('writing').addEventListener('input', event => {
   $('count').textContent = event.target.value.length;
 });
 $('review').addEventListener('click', analyzeWriting);
+
+function setWritingMode(mode){
+  writingMode=mode;
+  $('writingLayout').style.display = mode==='relay' ? 'none' : 'grid';
+  $('promptPanel').style.display = mode==='assigned' ? 'block' : 'none';
+  $('writingLayout').style.gridTemplateColumns = mode==='free' ? '1fr' : '310px 1fr';
+  $('relayPanel').style.display = mode==='relay' ? 'block' : 'none';
+  $('assignedModeBtn').classList.toggle('active',mode==='assigned');
+  $('freeModeBtn').classList.toggle('active',mode==='free');
+  $('relayModeBtn').classList.toggle('active',mode==='relay');
+  if(mode==='free') $('message').textContent='정해진 주제 없이 자유롭게 써보세요.';
+  if(mode==='assigned') $('message').textContent='장르를 고르고 마음에 드는 글감을 뽑아보세요.';
+  if(mode==='relay') renderRelay();
+}
+function renderRelay(){
+  const root=$('relayStory'); root.replaceChildren();
+  if(!relayTurns.length){const p=document.createElement('p');p.className='smallnote';p.textContent='아직 이야기가 없어요. 첫 문장을 써서 시작해 보세요!';root.appendChild(p);return;}
+  relayTurns.forEach(turn=>{const box=document.createElement('div');box.className='relay-turn';const who=document.createElement('small');who.textContent=turn.role==='ai'?'AI PARTNER':'YOUR TURN';const body=document.createElement('div');body.textContent=turn.text;box.append(who,body);root.appendChild(box);});
+}
+function addRelayTurn(role,text){
+  const clean=text.trim();if(!clean){alert('먼저 내용을 입력해 주세요.');return;}
+  relayTurns.push({role,text:clean});$('relayInput').value='';$('relayAiText').value='';renderRelay();
+}
+$('assignedModeBtn').addEventListener('click',()=>setWritingMode('assigned'));
+$('freeModeBtn').addEventListener('click',()=>setWritingMode('free'));
+$('relayModeBtn').addEventListener('click',()=>setWritingMode('relay'));
+$('relayAdd').addEventListener('click',()=>addRelayTurn('user',$('relayInput').value));
+$('relayAiAdd').addEventListener('click',()=>addRelayTurn('ai',$('relayAiText').value));
+$('relayPasteToggle').addEventListener('click',()=>{$('relayPasteArea').style.display=$('relayPasteArea').style.display==='none'?'block':'none';});
+$('relayCopy').addEventListener('click',async()=>{
+  const story=relayTurns.map(t=>(t.role==='ai'?'AI: ':'나: ')+t.text).join('\n\n');
+  const prompt='다음은 내가 쓰고 있는 릴레이 소설이야. 앞선 설정과 문체를 유지하면서 바로 다음 장면을 1~3문단 이어 써줘. 기존 내용을 반복하지 말고, 새로운 사건이나 감정의 변화를 자연스럽게 추가해줘. 이야기의 결말은 아직 내지 말아줘.\n\n'+story+'\n\n다음 차례를 이어 써줘.';
+  try{await navigator.clipboard.writeText(prompt);alert('AI에게 보낼 요청문을 복사했어요! ChatGPT 등에 붙여넣고 답변을 받은 뒤, “AI 답변 붙여넣기”에 넣어 주세요.');}
+  catch(e){$('relayInput').value=prompt;$('relayInput').focus();alert('자동 복사가 안 돼서 입력칸에 요청문을 넣어뒀어요. 길게 눌러 복사해 주세요.');}
+});
+$('relayReset').addEventListener('click',()=>{if(confirm('이야기를 처음부터 다시 시작할까요?')){relayTurns=[];renderRelay();}});
+
 renderHistory();
 pickTopic();
 </script></body></html>
