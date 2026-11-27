@@ -16,7 +16,13 @@ main{max-width:1050px;margin:auto;padding:0 24px 60px}.intro{text-align:center;p
 <header><div class="brand">문장 온도 <small>FICTION WRITING STUDIO</small></div><div class="tag">나만의 소설 연습실</div></header>
 <main><section class="intro"><div class="eyebrow">WRITE · FEEL · GROW</div><h1>오늘의 문장을 써볼까요?</h1><p>작은 장면 하나를 쓰고, 문장 속 감정을 발견해 보세요.<br>완벽한 글보다 어제보다 조금 선명한 문장을 목표로.</p></section>
 <div class="layout"><aside class="panel"><h2>오늘의 글감</h2><label class="label" for="category">연습할 묘사</label><select class="select" id="category"><option value="random">🎲 아무거나 랜덤</option><option value="emotion">감정 묘사</option><option value="atmosphere">분위기 묘사</option><option value="sense">감각 묘사</option><option value="action">인물 행동 묘사</option><option value="dialogue">대화와 속마음</option></select><div class="topic" aria-live="polite"><div class="mini" id="topicType">TODAY'S PROMPT</div><h3 id="topicTitle">비가 그친 밤, 전하지 못한 말을 품은 채 누군가를 기다린다.</h3><p id="topicDesc">장면을 떠올리고 300자 이상 써보세요.</p></div><button class="btn btn-soft btn-full" id="newTopic">다른 주제 뽑기 ↻</button><div class="tip">✦ 연습 팁<br>감정을 이름 붙이는 대신, 인물의 몸과 행동에 감정을 묻혀 보세요. 한 문장에 모든 걸 담으려 하지 않아도 괜찮아요.</div></aside>
-<section class="panel"><div class="write-head"><h2>나의 장면</h2><span class="counter"><b id="count">0</b>자</span></div><textarea id="writing" placeholder="예) 창문에 빗방울이 하나씩 맺혔다. 휴대전화 화면은 몇 번이나 켜졌다 꺼졌지만, 기다리던 이름은 끝내 나타나지 않았다…"></textarea><div class="actions"><span class="smallnote">글은 이 브라우저에서 분석돼요.<br>작성한 문장은 자동 저장되지 않으니 복사해 두세요.</span><button class="btn btn-main" id="review">내 글 첨삭받기 ✦</button></div><div class="toast" id="message"></div><div class="results" id="results"><div class="result-top"><h2>문장 피드백</h2><span class="score" id="score">분석 완료</span></div><div class="feedback-grid"><div class="feedback"><h3>🌷 잘한 점</h3><ul id="strengths"></ul></div><div class="feedback"><h3>🪄 더 다듬어 볼 점</h3><ul id="improve"></ul></div><div class="feedback wide"><h3>🔎 문장 코칭 — 이유와 방법</h3><div id="coaching"></div></div><div class="feedback wide"><h3>✍️ 연습 방향</h3><p id="exercise"></p></div></div></div></section></div><div class="footer">천천히 써도 괜찮아요. 문장은 연습하는 만큼 자기만의 온도를 갖게 되니까.</div></main>
+<section class="panel"><div class="write-head"><h2>나의 장면</h2><span class="counter"><b id="count">0</b>자</span></div><textarea id="writing" placeholder="예) 창문에 빗방울이 하나씩 맺혔다. 휴대전화 화면은 몇 번이나 켜졌다 꺼졌지만, 기다리던 이름은 끝내 나타나지 않았다…"></textarea><div class="actions"><span class="smallnote">글은 이 브라우저에서 분석돼요.<br>작성한 문장은 자동 저장되지 않으니 복사해 두세요.</span><button class="btn btn-main" id="review">내 글 첨삭받기 ✦</button></div><div class="toast" id="message"></div><div class="results" id="results"><div class="result-top"><h2>문장 피드백</h2><span class="score" id="score">분석 완료</span></div><div class="feedback-grid"><div class="feedback"><h3>🌷 잘한 점</h3><ul id="strengths"></ul></div><div class="feedback"><h3>🪄 더 다듬어 볼 점</h3><ul id="improve"></ul></div><div class="feedback wide"><h3>🔎 문장 코칭 — 이유와 방법</h3><div id="coaching"></div></div><div class="feedback wide"><h3>✍️ 연습 방향</h3><p id="exercise"></p></div></div></div></section></div>
+<section class="panel" id="historyPanel" style="margin-top:20px">
+  <div class="write-head"><h2>나의 글 기록</h2><span class="counter" id="historyCount">0개의 기록</span></div>
+  <p class="smallnote" style="margin:8px 0 14px">첨삭받은 글은 이 브라우저에 자동으로 보관돼요.</p>
+  <div id="historyList" aria-live="polite"></div>
+</section>
+<div class="footer">천천히 써도 괜찮아요. 문장은 연습하는 만큼 자기만의 온도를 갖게 되니까.</div></main>
 <script>
 const prompts = {
   emotion: [
@@ -96,6 +102,91 @@ function addCoaching(items) {
     root.appendChild(wrap);
   });
 }
+
+const HISTORY_KEY = 'sentenceTemperatureHistory_v1';
+function readHistory() {
+  try {
+    const data = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    return [];
+  }
+}
+function writeHistory(items) {
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(items));
+    return true;
+  } catch (error) {
+    $('message').textContent = '기록을 저장하지 못했어요. 브라우저 저장 공간이나 설정을 확인해 주세요.';
+    return false;
+  }
+}
+function renderHistory() {
+  const items = readHistory();
+  $('historyCount').textContent = items.length + '개의 기록';
+  const list = $('historyList');
+  list.replaceChildren();
+  if (!items.length) {
+    const empty = document.createElement('p');
+    empty.className = 'smallnote';
+    empty.textContent = '아직 저장된 글이 없어요. 글을 작성하고 첨삭받으면 여기에 기록돼요.';
+    list.appendChild(empty);
+    return;
+  }
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.style.cssText = 'border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:10px;background:#fff';
+    const top = document.createElement('div');
+    top.style.cssText = 'display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap';
+    const title = document.createElement('b');
+    title.style.cssText = 'font:16px "Nanum Myeongjo",serif';
+    title.textContent = item.topic || '자유 글쓰기';
+    const date = document.createElement('span');
+    date.className = 'smallnote';
+    date.textContent = item.dateLabel + ' · ' + item.text.length + '자';
+    top.append(title, date);
+    const preview = document.createElement('p');
+    preview.style.cssText = 'font-size:13px;line-height:1.7;color:var(--muted);margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere';
+    preview.textContent = item.text.length > 110 ? item.text.slice(0,110) + '…' : item.text;
+    const buttons = document.createElement('div');
+    buttons.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap';
+    const open = document.createElement('button');
+    open.className = 'btn btn-soft';
+    open.textContent = '글과 첨삭 다시 보기';
+    open.addEventListener('click', () => showHistoryItem(item.id));
+    const remove = document.createElement('button');
+    remove.className = 'btn btn-soft';
+    remove.textContent = '기록 삭제';
+    remove.addEventListener('click', () => {
+      if (!confirm('이 글 기록을 삭제할까요? 삭제한 기록은 되돌릴 수 없어요.')) return;
+      writeHistory(readHistory().filter(entry => entry.id !== item.id));
+      renderHistory();
+    });
+    buttons.append(open, remove);
+    card.append(top, preview, buttons);
+    list.appendChild(card);
+  });
+}
+function showHistoryItem(id) {
+  const item = readHistory().find(entry => entry.id === id);
+  if (!item) return;
+  $('writing').value = item.text;
+  $('count').textContent = item.text.length;
+  if (item.topic) {
+    $('topicTitle').textContent = item.topic;
+    $('topicType').textContent = 'SAVED WRITING';
+    $('topicDesc').textContent = '기록에서 불러온 글감이에요.';
+  }
+  $('score').textContent = '분석 참고 점수 ' + item.score + '점';
+  addListItems('strengths', item.strengths);
+  addListItems('improve', item.improvements);
+  addCoaching(item.coaching);
+  $('exercise').textContent = item.exercise;
+  $('results').style.display = 'block';
+  $('message').textContent = item.dateLabel + '에 저장한 글을 불러왔어요.';
+  $('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 function analyzeWriting() {
   const text = $('writing').value.trim();
   const length = text.length;
@@ -156,6 +247,21 @@ function analyzeWriting() {
   addCoaching(coaching);
   $('exercise').textContent = '지금 쓴 글에서 가장 마음에 드는 문장 하나를 골라 보세요. 그 문장은 유지한 채 감각 하나와 인물의 행동 하나를 덧붙여 다시 써보세요. 바뀐 문장이 감정을 더 잘 전달하는지 비교하면 좋아요.';
   $('results').style.display = 'block';
+  const now = new Date();
+  const record = {
+    id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(now.getTime()) + Math.random().toString(16).slice(2),
+    dateLabel: now.toLocaleString('ko-KR'),
+    topic: currentTopic ? currentTopic.title : '자유 글쓰기',
+    text,
+    score: Math.round(score),
+    strengths,
+    improvements,
+    coaching,
+    exercise: $('exercise').textContent
+  };
+  const saved = readHistory();
+  saved.unshift(record);
+  if (writeHistory(saved.slice(0, 100))) renderHistory();
   $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -165,5 +271,6 @@ $('writing').addEventListener('input', event => {
   $('count').textContent = event.target.value.length;
 });
 $('review').addEventListener('click', analyzeWriting);
+renderHistory();
 pickTopic();
 </script></body></html>
